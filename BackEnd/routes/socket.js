@@ -1,4 +1,4 @@
-const socketIO = require('sokect.io');
+const socketIO = require('socket.io');
 const Message = require('../models/Message');
 
 const socketHandler = (server) => {
