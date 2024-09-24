@@ -1,11 +1,12 @@
-import logo from './logo.svg';
 import './App.css';
-import Chat from './components/Chat';
+import Dashboard from './modules/Dashboard';
+import Form from './modules/Form';
 
 function App() {
   return (
-    <div className='bg-red-400'> 
-      Hello World!
+    <div className='bg-[#d1e1fa] h-screen flex justify-center items-center'>
+      {/* <Form /> */}
+      <Dashboard />
     </div>
   );
 }
