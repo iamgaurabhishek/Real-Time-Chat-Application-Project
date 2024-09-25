@@ -35,11 +35,11 @@ const DashboardLeftSide = () => {
         },
     ]
   return (
-    <div>
+    <div className='w-[25%] border h-screen bg-white'>
       <div className='flex justify-center items-center my-8'>
             <div className='border border-primary-color p-2 rounded-full'><img src={Avatar} width={50} height={50}/></div>
             <div className='ml-8'>
-                <h3 className='text-2xl'>Tutorials Dev</h3>
+                <h3 className='text-2xl'>Abhishek Gaur</h3>
                 <p className='text-lg font-light'>My Account</p>
             </div>
         </div>
