@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import InputCard from '../InputCard';
 import SwitchAuthForm from '../SwitchAuthForm';
 import Login from '../Login';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { firebaseAuth } from '../../utils/firebase-config';
 
 const SignUp = () => {
 
@@ -21,8 +23,18 @@ const SignUp = () => {
 
   const handleSignUpSubmit = (e) => {
     e.preventDefault();
-    console.log(formValues);
-    // Handle sign-up logic here
+    
+    if(formValues.password !== formValues.confirmPassword) {
+        alert('Password do not match');
+        return;
+    }
+    try{
+
+    }
+    catch(error){
+        console.log('Sign-up failed: ', error);
+        alert("Sign-up failed. Please try again");
+    }
   };
 
   // If showLogin is true, render the Login component instead

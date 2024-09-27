@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import InputCard from '../InputCard';
 import SwitchAuthForm from '../SwitchAuthForm';
 import SignUp from '../SignUp';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { firebaseAuth } from '../../utils/firebase-config';
 
 const Login = () => {
 
@@ -12,18 +14,25 @@ const Login = () => {
     }
 
   const [formValues, setFormValues] = useState({
-    name: '',
     email: '',
     password: '',
-    confirmPassword: '',
   });
 
-  const handleSignUpSubmit = (e) => {
+  const handleSignUpSubmit = async (e) => {
     e.preventDefault();
-    console.log(formValues);
-    // Handle sign-up logic here
+    try{
+        const userCredentials = await signInWithEmailAndPassword(
+            firebaseAuth,
+            formValues.email,
+            formValues.password
+        );
+        console.log("Logged in user: ",userCredentials.user);
+    }
+    catch(error){
+        console.error("Logged in user: ",error);
+        alert("Login failed, Please try again later");
+    }
   };
-
   // If showLogin is true, render the Login component instead
   return (
     <div>

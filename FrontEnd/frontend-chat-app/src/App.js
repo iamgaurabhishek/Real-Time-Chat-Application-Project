@@ -1,12 +1,17 @@
 import './App.css';
 import Dashboard from './modules/Dashboard';
 import Form from './modules/Form';
+import { Routes, Route, redirect } from 'react-router-dom';
+import ProtechedRoute from './routes/ProtectedRoute.js';
 
 function App() {
   return (
     <div className='bg-[#d1e1fa] h-screen flex justify-center items-center'>
-      {/* <Form /> */}
-      <Dashboard />
+      <Routes>
+          <Route path='/users/login' element={<Form />} />
+          <Route path='/users/signup' element={<Form />} />
+          <Route path='/' element={<ProtechedRoute element={ Dashboard } />} />
+      </Routes>
     </div>
   );
 }
