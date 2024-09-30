@@ -2,26 +2,33 @@ import React, { Component, useEffect, useState } from 'react'
 import { Navigate } from 'react-router-dom';
 import { onAuthStateChanged} from 'firebase/auth';
 import { firebaseAuth } from '../../utils/firebase-config';
+import { useDispatch, useSelector } from 'react-redux';
+import { loginSuccess, logoutSuccess } from '../../redux/slice/authSlice';
+import LoadingSpinner from '../../components/Loading';
+
 const ProtechedRoute = ({ element: Component}) => {
 
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const isAuthenticated = useSelector((state)=> state.auth.isAuthenticated);
+    const dispatch = useDispatch();
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(firebaseAuth, (user) => {
             if(user) {
-                setIsAuthenticated(true);
+                dispatch(loginSuccess(user));
+                // setIsAuthenticated(true);
             }
             else{
-                setIsAuthenticated(false);
+                dispatch(logoutSuccess());
+                // setIsAuthenticated(false);
             }
             setLoading(false);
         });
         return () => unsubscribe; 
-    },[]);
+    },[dispatch]);
 
     if(loading){
-        return <div>Loading...</div>
+        return <LoadingSpinner />;
     }
 
   return isAuthenticated ? <Component /> : <Navigate to="/users/login" />;
