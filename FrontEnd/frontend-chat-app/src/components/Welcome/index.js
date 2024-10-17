@@ -16,11 +16,28 @@ const Welcome = () => {
         <h1 className='text-3xl font-bold'>Welcome {user?.name || "User"}!</h1>
 
         {isNewUser ? (
-            
+            <div className='text-center mt-4'>
+                <p className='text-lg'>We are excited to have you! Since you're new, here are some tips to get started:</p>
+                <ul className='list-disc mt-2'>
+                    <li>Explore your profile settings</li>
+                    <li>Get familiar with the Dashboard features</li>
+                    <li>Feel free to reach out to support for assistance</li>
+                </ul>
+                <button className='mt-6 bg-primary-color text-white py-2 px-4 rounded'
+                onClick={handleGoToDashboard}>Go to Dashboard</button>
+            </div>
+        ) : (
+            <div className='text-center mt-4'>
+                <p className='text-lg'>Welcome back! Here's what's new since your last visit:</p>
+                <ul className='list-disc mt-2'>
+                    <li>Will come to this section later to make it more reasonable.</li>
+                </ul>
+                <button className='mt-6 bg-primary-color text-white py-2 px-4 rounded'
+                onClick={handleGoToDashboard}>Go to Dashboard</button>
+            </div>
         )}
-      
     </div>
-  )
-}
+  );
+};
 
-export default Welcome
+export default Welcome;
