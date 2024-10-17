@@ -6,7 +6,6 @@ import { CgSpinner } from 'react-icons/cg';
 import OtpInput from 'otp-input-react';
 import PhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/style.css';
-import { FaThumbsUp } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginSuccess } from '../../redux/slice/authSlice';
 import toast, { Toaster } from 'react-hot-toast';
@@ -18,7 +17,6 @@ const PhoneAuth = ({firebaseUser}) => {
     const[loading, setLoading]= useState(false);
     const[showOTP, setShowOTP]= useState(false);
     const dispatch = useDispatch();
-    // const user = useSelector(state => state.auth.user);
 
     useEffect(()=> {
         if(!window.recaptchaVerifier){
@@ -33,20 +31,6 @@ const PhoneAuth = ({firebaseUser}) => {
             }, firebaseAuth)
         }
     },[])
-
-    // function onCaptchVerify(){
-    //     if(!window.recaptchaVerifier){
-    //         window.recaptchaVerifier = new RecaptchaVerifier('recaptcha-container', {
-    //             'size': 'invisible',
-    //             'callback': (response) => {
-    //                 onSignup();
-    //             },
-    //             'expired-callback': () => {
-    //                 toast.error('ReCaptcha expired.Please try again');
-    //             }
-    //         }, firebaseAuth)
-    //     }
-    // };
 
     function onSignup(){
         setLoading(true);
@@ -88,83 +72,8 @@ const PhoneAuth = ({firebaseUser}) => {
             setLoading(false);
             toast.error('OTP verification failed. Please try again');
         }
-
-        // window.confirmationResult.confirm(otp)
-        // .then(async(res)=> {
-        //     console.log("Phone number verified: ", res.user);
-        //     // Dispatch the loginSuccess action to update the Redux store with the user information.
-        //     dispatch(loginSuccess(res.user));   // Dispatch the user data to Redux store
-        //     setLoading(false);
-        // }).catch(err => {
-        //     console.log(err);
-        //     setLoading(false);
-        // })
     };
   return (
-    // <div className='p-4 flex flex-col justify-center text-center'>
-    //     <Toaster toastOptions={{duration: 4000}} />
-    //     <div id='recaptcha-container'></div>
-    //     {
-    //         user ? (
-    //             <h2 className='text-center font-medium text-2xl flex justify-center items-center'>
-    //                 <FaThumbsUp className="mr-2 text-yellow-400" />Successfully Sign up
-    //             </h2>
-    //         ) : (
-    //             <div className=''>
-    //             {
-    //                 showOTP  ? (
-    //                 <div className='flex flex-col justify-center items-center bg-green-400'>
-    //                     <div className='bg-primary-color text-white w-fit mx-auto p-4 rounded-full'>
-    //                         <BsFillShieldLockFill size={45}/>
-    //                     </div>
-    //                     <label htmlFor='otp' className='font-bold text-2xl text-center m-2'>
-    //                         Enter your OTP
-    //                     </label>
-    //                     <OtpInput
-    //                         value={otp} 
-    //                         onChange={setOtp}
-    //                         OTPLength={6} 
-    //                         otpType="number" 
-    //                         disabled={false} 
-    //                         autoFocus
-    //                         className="flex justify-between gap-2"
-    //                     >
-    //                     </OtpInput>
-    //                     <button onClick={onOTPVerify} className='bg-primary-color text-white font-bold m-5 py-2.5 flex items-center justify-center rounded-lg text-xl'>
-    //                         {
-    //                             loading && <CgSpinner size={30} className='mt-1 animate-spin'/>
-    //                         }
-    //                         <span className='mx-10'>Verify OTP</span>
-    //                     </button>
-    //                 </div> 
-    //                 )
-    //                 :
-    //                 (
-    //                 <div className='flex flex-col justify-center items-center'>
-    //                     <div className='bg-primary-color text-white w-fit mx-auto p-4 rounded-full'>
-    //                         <BsTelephoneFill size={45}/>
-    //                     </div>
-    //                     <label htmlFor='' className='font-bold text-xl text-center m-2'>
-    //                         Verify your Phone Number
-    //                     </label>
-    //                     <PhoneInput country={"ca"} value={phoneNumber} onChange={setPhoneNumber} />
-    //                     <button onClick={onSignup} className='bg-primary-color text-white font-bold m-5 py-2.5 flex items-center justify-center rounded-lg text-xl'>
-    //                         {
-    //                             loading && <CgSpinner size={30} className='mt-1 animate-spin'/>
-    //                         }
-    //                         <span className='mx-10'>Send code via SMS</span>
-    //                     </button>
-    //                 </div>
-    //                 )
-    //             }
-    
-                
-    //         </div>
-    //         )
-    //     }
-        
-        
-    // </div>
     <div className='p-4 flex flex-col justify-center text-center'>
     <Toaster toastOptions={{ duration: 4000 }} />
     <div id='recaptcha-container'></div>
