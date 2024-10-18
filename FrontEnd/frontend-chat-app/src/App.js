@@ -1,8 +1,8 @@
 import './App.css';
 import Dashboard from './modules/Dashboard';
 import Form from './modules/Form';
-import { Routes, Route, redirect } from 'react-router-dom';
-import ProtechedRoute from './routes/ProtectedRoute.js';
+import { Routes, Route } from 'react-router-dom';
+import ProtectedRoute from './routes/ProtectedRoute.js';
 import Welcome from './components/Welcome/index.js';
 
 function App() {
@@ -12,7 +12,8 @@ function App() {
           <Route path='/users/login' element={<Form />} />
           <Route path='/users/signup' element={<Form />} />
           <Route path='/welcome' element={<Welcome />} />
-          <Route path='/' element={<ProtechedRoute element={ Dashboard } />} />
+          <Route path='/dashboard' element={<ProtectedRoute element={ Dashboard } />} />
+          {/* <Route path='/' element={<Dashboard />}/> */}
       </Routes>
     </div>
   );

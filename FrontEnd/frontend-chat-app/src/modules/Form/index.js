@@ -1,20 +1,30 @@
 import { useState } from "react";
-import { signInWithEmailAndPassword, createUserWithEmailAndPassword, signInWithPopup } from "firebase/auth";
+import { signInWithPopup } from "firebase/auth";
 import { firebaseAuth, googleProvider } from "../../utils/firebase-config";
 import Login from "../../components/Login";
 import SignUp from "../../components/SignUp";
+import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { clearMessage, setError } from "../../redux/slice/authSlice";
 
 const Form = () => {
   const [typeOfLogin, setTypeOfLogin] = useState(null);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const errorMessage = useSelector((state) => state.auth.error); // Access the global error state.
 
   const handleGoogleLogin = async () => {
     try{
         const result = await signInWithPopup(firebaseAuth, googleProvider);
         const user = result.user;
         console.log("Google logged in user: ", user);
+        dispatch(clearMessage());
+        // Add any additional redirection
+        navigate("/dashboard");
     }
     catch(error){
       console.error("Google Login Error: ",error);
+      dispatch(setError("Google sign-in falied. Please try again."))
     }
   }
 
