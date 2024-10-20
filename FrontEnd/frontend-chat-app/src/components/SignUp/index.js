@@ -5,10 +5,15 @@ import EmailSignUp from '../SignUpMethods/EmailSignUp';
 import GoogleSignUp from '../SignUpMethods/GoogleSignUp';
 import PhoneSignUp from '../SignUpMethods/PhoneSignUp';
 import SwitchAuthForm from '../SwitchAuthForm';
+import SignUpMethodButton from '../SignUpMethodButton';
 
 const SignUp = () => {
   const [signUpMethod, setSignUpMethod] = useState('email');
   const [showLogin, setShowLogin] = useState(false);
+
+  const handleMethodSwitch = (method) => {
+    setSignUpMethod(method);
+  }
 
   return (
     <div>
@@ -22,27 +27,24 @@ const SignUp = () => {
 
           {/* Buttons to switch sign-up method */}
           <div className='flex justify-between items-center my-4'>
-              <button 
-                type='button' 
-                className={`text-primary-color underline ${signUpMethod === 'email' ? "font-bold" : ""}`}
-                onClick={() => setSignUpMethod('email')}
-              >
-                Sign Up with Email
-              </button>
-              <button
-                type="button"
-                className={`text-primary-color underline ${signUpMethod === 'google' ? "font-bold" : ""}`}
-                onClick={() => setSignUpMethod('google')}
-              >
-                Sign Up with Google
-              </button>
-              <button
-                type="button"
-                className={`text-blue-500 underline ${signUpMethod === 'phone' ? 'font-bold' : ''}`}
-                onClick={() => setSignUpMethod('phone')}
-              >
-                Sign Up with Phone Number
-              </button>
+              <SignUpMethodButton
+                  type="email"
+                  label="Sign Up with Email"
+                  currentMethod={signUpMethod}
+                  onSwitchMethod={handleMethodSwitch}
+              />             
+              <SignUpMethodButton
+                  type="google"
+                  label="Sign Up with Google"
+                  currentMethod={signUpMethod}
+                  onSwitchMethod={handleMethodSwitch}
+              />             
+              <SignUpMethodButton
+                  type="phone"
+                  label="Sign Up with Phone Number"
+                  currentMethod={signUpMethod}
+                  onSwitchMethod={handleMethodSwitch}
+              />             
           </div>
           <SwitchAuthForm question="Already have an account?" link="Log In" moveTo={()=> setShowLogin(true)}/>
         </InputCard>
@@ -50,5 +52,4 @@ const SignUp = () => {
     </div>
   )
 }
-
-export default SignUp
+export default SignUp;
