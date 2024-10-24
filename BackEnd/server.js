@@ -1,27 +1,53 @@
 const express = require('express');
-const http = require('http');
-const mongoose = require('mongoose');
 const dotenv = require('dotenv');
-const authRoutes = require('./routes/auth');
-const socketHandler = require('./routes/socket');
 
-dotenv.config();
-const app = express();
-const server = http.createServer(app);
+// Load environment variables from .env file
+dotenv.config(); // Ensure this is at the top before importing any other files or operations that use environment variables
+
+// Connect DB
+require('./config/dbConnection');
+
+// Import files
+const Users = require('./models/Users');
+
 // Connect to MongoDB
-mongoose.connect(process.env.MONGO_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-});
 
-// Middleware
+// Middlewares
+const app = express(); 
 app.use(express.json());
-
-// Routes
-app.use('./api/auth', authRoutes);
-
-// Socket.IO
-socketHandler(server);
+app.use(express.urlencoded({ extended: false }));
 
 const PORT = process.env.PORT || 5000;
-server.listen(PORT, ()=> console.log(`Server running at port ${PORT}`));
+// Routes
+app.get('/', (req, res) => {
+    res.send('Welcome');
+})
+
+// Whenever we are dealing with the database it will take some time to fetch the data from it so we can use the powers of asyncronous javascript
+app.post('api/register', async(req, res) => {
+    try{
+        const { fullName, email, password } = req.body;
+
+        if(!fullName || !email || !password){
+            res.status(400).send('Please enter all required fields');
+        }
+        // Now we will check whether the email already exists or not
+        else{
+            const isAlreadyExists = await Users.findOne({ email });
+            if(isAlreadyExists) {
+                res.status(400).send('User already exists');
+            }else{
+                // we will not send the password here beacuse first we have to encrypt the password to make it more secure.
+                const newUser = new Users({fullName, email});
+                
+            }
+        }
+    }
+    catch(error){
+        res.status(500).send('Server Error');
+    }
+})
+
+app.listen(PORT, () => {
+    console.log('listening on port ' + PORT);
+})
