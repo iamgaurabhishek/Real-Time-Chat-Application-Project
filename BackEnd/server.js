@@ -1,5 +1,6 @@
 const express = require('express');
 const dotenv = require('dotenv');
+const bcryptjs = require('bcryptjs');
 
 // Load environment variables from .env file
 dotenv.config(); // Ensure this is at the top before importing any other files or operations that use environment variables
@@ -31,15 +32,16 @@ app.post('api/register', async(req, res) => {
         if(!fullName || !email || !password){
             res.status(400).send('Please enter all required fields');
         }
-        // Now we will check whether the email already exists or not
+        //Step 1: Now we will check whether the email already exists or not
         else{
             const isAlreadyExists = await Users.findOne({ email });
             if(isAlreadyExists) {
                 res.status(400).send('User already exists');
             }else{
-                // we will not send the password here beacuse first we have to encrypt the password to make it more secure.
+                //Step 2: we will not send the password here beacuse first we have to encrypt the password to make it more secure.
                 const newUser = new Users({fullName, email});
-                
+                // Step 3. Now we will bcrypt the password to make it more secure.
+                bcryptjs.hash(password, 10)
             }
         }
     }
