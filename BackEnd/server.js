@@ -11,6 +11,7 @@ require('./config/dbConnection');
 
 // Import files
 const Users = require('./models/Users');
+const Conversations = require('./models/Conversations');
 
 // Connect to MongoDB
 
@@ -93,6 +94,47 @@ app.post('/api/login', async (req, res, next) => {
     }
 })
 
+// Here we have created a new conversation.
+app.post('/api/conversation', async (req, res) => {
+    try {
+        const { senderId, receiverId } = req.body;
+        const newConversation = new Conversations({ members: [senderId, receiverId] });
+        await newConversation.save();
+        res.status(200).send('Conversation created successfully');
+    } catch (error) {
+        console.log("Error: ", error);
+    }
+})
+
+// Now I want to show the data of the conversation
+app.get('/api/conversation/:userId', async (req, res) => {
+    try {
+        const userId = req.params.userId;
+        const conversations = await Conversations.find({ members: { $in: [userId] } }); // $in means "include"
+        // Next we want to show the data of the members who are involved in the conversation, for that look at the below code:
+
+        // 1. --------New Concepts: whenever we are using async await function inside the map function, we need to provide it the Promise.all object.--------------------------------------------------------
+        const conversationUserData = Promise.all(conversations.map( async (conversation) => {
+            const receiverId = conversation.members.find((member) => member !== userId);
+            const user = await Users.findById(receiverId);
+            return { user: {email: user.email, fullName: user.fullName}, conversationId: conversation.id };
+        }))
+        console.log("Conversation User Data: ",await conversationUserData);
+        res.status(200).json(await conversationUserData);
+    } catch (error) {
+        console.log('Error: ', error)
+    }
+})
 app.listen(PORT, () => {
     console.log('listening on port ' + PORT);
 })
+
+
+
+/* When using "async/await" inside a map function, it's necessary to wrap the "map" function in "Promise.all" because "map" function in "Promise.all" because "map" itself does not handle asynchronous behaviour.
+
+1. Array.map is not await-Aware
+
+2. Using Promise.all to resolve all Promises
+
+*/
