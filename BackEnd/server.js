@@ -12,6 +12,7 @@ require('./config/dbConnection');
 // Import files
 const Users = require('./models/Users');
 const Conversations = require('./models/Conversations');
+const Messages = require('./models/Messages');
 
 // Connect to MongoDB
 
@@ -125,6 +126,32 @@ app.get('/api/conversation/:userId', async (req, res) => {
         console.log('Error: ', error)
     }
 })
+
+app.post('/api/message', async(req, res) => {
+    try {
+        const { conversationId, senderId, message } = req.body;
+        const newMessage = new Messages({ conversationId, senderId, message });
+        await newMessage.save();
+        res.status(200).send('Message sent successfully');
+    } catch (error) {
+        console.log('Error: ', error)
+    }
+})
+
+app.get('/api/message/:conversationId', async (req, res) => {
+    try {
+        const conversationId = req.params.conversationId;
+        const messages = await Messages.find({ conversationId });
+        const messageUserData = Promise.all(messages.map(async (message) => {
+            const user = await Users.findById(message.senderId);
+            return { user: { email: user.email, fullName: user.fullName }, message: message.message }
+        }))
+        res.status(200).json(await messageUserData);
+    } catch (error) {
+        console.log("Error: ", error);
+    }
+})
+
 app.listen(PORT, () => {
     console.log('listening on port ' + PORT);
 })
