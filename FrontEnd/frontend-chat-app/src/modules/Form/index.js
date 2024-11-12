@@ -1,18 +1,28 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { signInWithPopup } from "firebase/auth";
 import { firebaseAuth, googleProvider } from "../../utils/firebase-config";
 import Login from "../../components/Login";
 import SignUp from "../../components/SignUp";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { clearMessage, setError } from "../../redux/slice/authSlice";
 
 const Form = () => {
   const [typeOfLogin, setTypeOfLogin] = useState(null);
+  const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const errorMessage = useSelector((state) => state.auth.error); // Access the global error state.
 
+  // Determine whether to show login or signup based on the current route
+  useEffect(() => {
+    if(location.pathname === '/users/login'){
+      setTypeOfLogin('login');
+    }
+    else if(location.pathname === '/users/signup'){
+      setTypeOfLogin('signup');
+    }
+  },[location.pathname])
   const handleGoogleLogin = async () => {
     try{
         const result = await signInWithPopup(firebaseAuth, googleProvider);

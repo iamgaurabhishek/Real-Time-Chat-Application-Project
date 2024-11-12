@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { loginSuccess, logoutSuccess } from '../../redux/slice/authSlice';
 import LoadingSpinner from '../../components/Loading';
 
-const ProtectedRoute = ({ element: Component}) => {
+const ProtectedRoute = ({ element: Component, auth= false}) => {
 
     const isAuthenticated = useSelector((state)=> state.auth.isAuthenticated);
     const dispatch = useDispatch();
