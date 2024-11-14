@@ -88,7 +88,7 @@ const Login = () => {
         onChange={(e) => setFormValues({ ...formValues, password: e.target.value })}
       />
       {/* Google Login-In Button */}
-      <button className='bg-blue-500 text-white py-2 px-4 rounded-lg mb-4' onClick={handleGoogleLogin}>
+      <button className='bg-yellow-600 text-white py-2 px-4 rounded-lg mb-4' onClick={handleGoogleLogin}>
         Login in with Google
       </button>
       {/* Display global success message */}

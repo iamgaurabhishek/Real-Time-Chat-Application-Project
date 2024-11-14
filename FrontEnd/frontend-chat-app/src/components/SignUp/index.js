@@ -20,7 +20,7 @@ const SignUp = () => {
       {showLogin ? (
         <Login />
       ) : (
-        <InputCard title="Sign Up" buttonText="Sign Up">
+        <InputCard title="Sign Up" buttonText="Sign Up with Email">
           {signUpMethod === 'email' && <EmailSignUp setShowLogin={setShowLogin} />}
           {signUpMethod === 'google' && <GoogleSignUp />}
           {signUpMethod === 'phone' && <PhoneSignUp />}

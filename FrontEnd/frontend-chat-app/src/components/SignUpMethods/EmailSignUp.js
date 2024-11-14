@@ -98,12 +98,9 @@ const EmailSignUp = ({ setShowLogin }) => {
             onChange={(e) => setFormValues({ ...formValues, confirmPassword: e.target.value })}
             required
       />
-      <button onClick={handleEmailSignUp} className="bg-primary-color text-white py-2 px-4 rounded-lg">
+      {/* <button onClick={handleEmailSignUp} className="bg-primary-color text-white py-2 px-4 rounded-lg">
         Sign Up With Email
-      </button>
-      <button type='button' className='text-blue-500 underline' onClick={() => setShowLogin(true)}>
-            Already have an account? Log In
-      </button>
+      </button> */}
     </div>
   );
 };
