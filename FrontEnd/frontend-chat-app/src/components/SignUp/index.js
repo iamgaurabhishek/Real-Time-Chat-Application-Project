@@ -11,7 +11,13 @@ const SignUp = () => {
   const [signUpMethod, setSignUpMethod] = useState('email');
   const [showLogin, setShowLogin] = useState(false);
 
-  const handleMethodSwitch = (method) => {
+  // Function to console.log the user credentials!
+  const handleUserCredentials = (credentials) => {
+    console.log("User credentials", credentials);
+  }
+
+  const handleMethodSwitch = (e, method) => {
+    e.preventDefault();
     setSignUpMethod(method);
   }
 
@@ -21,9 +27,9 @@ const SignUp = () => {
         <Login />
       ) : (
         <InputCard title="Sign Up" buttonText="Sign Up with Email">
-          {signUpMethod === 'email' && <EmailSignUp setShowLogin={setShowLogin} />}
-          {signUpMethod === 'google' && <GoogleSignUp />}
-          {signUpMethod === 'phone' && <PhoneSignUp />}
+          {signUpMethod === 'email' && <EmailSignUp setShowLogin={setShowLogin}  onSubmit={handleUserCredentials} />}
+          {signUpMethod === 'google' && <GoogleSignUp onSubmit={handleUserCredentials} />}
+          {signUpMethod === 'phone' && <PhoneSignUp onSubmit={handleUserCredentials} />}
 
           {/* Buttons to switch sign-up method */}
           <div className='flex justify-between items-center my-4'>

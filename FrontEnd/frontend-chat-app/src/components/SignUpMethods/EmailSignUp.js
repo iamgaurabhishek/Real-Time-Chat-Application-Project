@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { firebaseAuth } from '../../utils/firebase-config';
 import { loginSuccess, setError, startLoading, stopLoading } from '../../redux/slice/authSlice';
 
-const EmailSignUp = ({ setShowLogin }) => {
+const EmailSignUp = ({ setShowLogin, onSubmit }) => {
 
     const dispatch = useDispatch();
     const loading = useSelector((state) => state.auth.loading);   // Access global Loading state
@@ -29,6 +29,9 @@ const EmailSignUp = ({ setShowLogin }) => {
 
       e.preventDefault();
 
+      console.log("handleEmailSignUp called"); // Debug log to confirm function is called
+      console.log("Form values: ", formValues); // Log current form values.
+
         if(formValues.password !== formValues.confirmPassword) {
             toast.error('Password do not match');
             return;
@@ -51,9 +54,16 @@ const EmailSignUp = ({ setShowLogin }) => {
             const user = userCredential.user;
             dispatch(loginSuccess({ user, isNewUser: true }));
             toast.success("Email sign-up successful!");
-            // console.log("Email sign-up successful: ", user);
+      
+            // Call onSubmit to pass credentials back to parent
+            if(onSubmit){
+              onSubmit({ name: formValues.name, email: formValues.email });
+            }
+
+            setShowLogin(true); // Optionally navigate to Login page
         }
         catch(error) {
+            console.error("Firebase Error:", error); // Log the specific Firebase error
             const errorMessage = error.message || 'Email sign-up failed. Please try again.';
             dispatch(setError(errorMessage));
             toast.error("Email sign-up failed. Please try again");
@@ -66,6 +76,7 @@ const EmailSignUp = ({ setShowLogin }) => {
 
   return (
     <div>
+      <form onSubmit={handleEmailSignUp}>
       <input
             className='w-full border border-gray- rounded-lg p-2 mb-4'
             type='text'
@@ -98,11 +109,16 @@ const EmailSignUp = ({ setShowLogin }) => {
             onChange={(e) => setFormValues({ ...formValues, confirmPassword: e.target.value })}
             required
       />
-      {/* <button onClick={handleEmailSignUp} className="bg-primary-color text-white py-2 px-4 rounded-lg">
+      <button type="submit" className="bg-primary-color text-white py-2 px-4 rounded-lg">
         Sign Up With Email
-      </button> */}
+      </button>
+      </form>
     </div>
   );
 };
 
 export default EmailSignUp;
+
+/*Note:
+      When you are nesting a prop into another component, make sure that you are not passing it through form element twice. Once in the parent component and again in the child component. Make the form element nearest to the props, which means in the most cases you should pass it through form element of the child component.
+*/
