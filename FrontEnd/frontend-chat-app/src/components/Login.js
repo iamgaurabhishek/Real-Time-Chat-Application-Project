@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
-import InputCard from '../InputCard';
-import SwitchAuthForm from '../SwitchAuthForm';
-import SignUp from '../SignUp';
+import InputCard from './InputCard';
+import SwitchAuthForm from './SwitchAuthForm';
+import SignUp from './SignUp';
 import { signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
-import { firebaseAuth, googleProvider } from '../../utils/firebase-config';
+import { firebaseAuth, googleProvider } from './../utils/firebase-config';
 import { useDispatch, useSelector } from 'react-redux';
-import { clearError, clearMessage, loginSuccess, setError, setSucess, startDelay } from '../../redux/slice/authSlice';
+import { clearError, clearMessage, loginSuccess, setError, setSucess, startDelay } from './../redux/slice/authSlice';
 import { useNavigate } from 'react-router-dom';
-import ErrorMessage from '../ErrorMessage';
-import SuccessfulMessage from '../SuccessfulMessage';
-import DelayedNavigation from '../DelayedNavigation';
+import ErrorMessage from './ErrorMessage';
+import SuccessfulMessage from './SuccessfulMessage';
+import DelayedNavigation from './DelayedNavigation';
 
 const Login = () => {
 

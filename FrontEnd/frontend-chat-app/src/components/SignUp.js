@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
-import Login from '../Login';
-import InputCard from '../InputCard';
-import EmailSignUp from '../SignUpMethods/EmailSignUp';
-import GoogleSignUp from '../SignUpMethods/GoogleSignUp';
-import PhoneSignUp from '../SignUpMethods/PhoneSignUp';
-import SwitchAuthForm from '../SwitchAuthForm';
-import SignUpMethodButton from '../SignUpMethodButton';
+import Login from './Login';
+import InputCard from './InputCard';
+import EmailSignUp from './SignUpMethods/EmailSignUp';
+import GoogleSignUp from './SignUpMethods/GoogleSignUp';
+import PhoneSignUp from './SignUpMethods/PhoneSignUp';
+import SwitchAuthForm from './SwitchAuthForm';
+import SignUpMethodButton from './SignUpMethodButton';
 
 const SignUp = () => {
   const [signUpMethod, setSignUpMethod] = useState('email');

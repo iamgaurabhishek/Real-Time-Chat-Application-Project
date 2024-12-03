@@ -3,10 +3,10 @@ import Dashboard from './modules/Dashboard';
 import Form from './modules/Form';
 import { Routes, Route } from 'react-router-dom';
 import ProtectedRoute from './routes/ProtectedRoute.js';
-import Welcome from './components/Welcome/index.js';
-import FirstPage from './components/FirstPage/index.js';
-import Login from './components/Login/index.js';
-import SignUp from './components/SignUp/index.js';
+import Welcome from './components/Welcome';
+import FirstPage from './components/FirstPage';
+import Login from './components/Login';
+import SignUp from './components/SignUp';
 
 function App() {
   return (

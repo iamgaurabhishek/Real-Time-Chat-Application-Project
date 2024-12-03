@@ -1,5 +1,6 @@
 import React from 'react'
-import PhoneAuth from '../PhoneAuth'
+// import PhoneAuth from '../PhoneAuth'
+import PhoneAuth from '../PhoneAuth/PhoneAuth';
 import { useDispatch, useSelector } from 'react-redux'
 import { setErrorMessage, setSuccessMessage } from '../../redux/slice/messageSlice';
 import ErrorMessage from '../ErrorMessage';
