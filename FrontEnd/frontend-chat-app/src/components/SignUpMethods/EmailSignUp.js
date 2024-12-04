@@ -54,13 +54,18 @@ const EmailSignUp = ({ setShowLogin, onSubmit }) => {
             const user = userCredential.user;
             dispatch(loginSuccess({ user, isNewUser: true }));
             toast.success("Email sign-up successful!");
+
+            // Notify parent component of successful sign-up
+            if(setShowLogin) {
+              setShowLogin(true); // Navigate to Login page
+            }
       
             // Call onSubmit to pass credentials back to parent
-            if(onSubmit){
-              onSubmit({ name: formValues.name, email: formValues.email });
-            }
+            // if(onSubmit){
+            //   onSubmit({ name: formValues.name, email: formValues.email });
+            // }
 
-            setShowLogin(true); // Optionally navigate to Login page
+            // setShowLogin(true); // Optionally navigate to Login page
         }
         catch(error) {
             console.error("Firebase Error:", error); // Log the specific Firebase error
@@ -80,7 +85,7 @@ const EmailSignUp = ({ setShowLogin, onSubmit }) => {
       <input
             className='w-full border border-gray- rounded-lg p-2 mb-4'
             type='text'
-            placeholder='Name'
+            placeholder='Full Name'
             value={formValues.name}
             onChange={(e) => setFormValues({ ...formValues, name: e.target.value })}
             required

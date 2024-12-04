@@ -13,7 +13,7 @@ const Form = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const errorMessage = useSelector((state) => state.auth.error); // Access the global error state.
-
+  
   // Determine whether to show login or signup based on the current route
   useEffect(() => {
     if(location.pathname === '/users/login'){
@@ -77,5 +77,4 @@ const Form = () => {
     </div>
   );
 };
-
 export default Form;
